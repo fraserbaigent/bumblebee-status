@@ -1,4 +1,3 @@
-# -*- coding: UTF-8 -*-
 # pylint: disable=C0111,R0903
 
 """Displays the temperature on the current location based on the ip
@@ -79,7 +78,7 @@ class Module(core.module.Module):
 
     def output(self, widget):
         if not self.__valid:
-            return "?"
+            return "Weather: No IP"
         if self.__showminmax:
             self.__showcity = False
             return (
