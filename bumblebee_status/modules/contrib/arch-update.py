@@ -22,13 +22,18 @@ class Module(core.module.Module):
         self.background = True
         self.__packages = 0
         self.__error = False
+        self.__connection_err = False
 
     @property
     def __format(self):
         return self.parameter("format", "Update Arch: {}")
 
     def utilization(self, widget):
-        return self.__format.format(self.__packages)
+        if self.__connection_err:
+            return "Arch: No IP"
+        else:
+            return self.__format.format(self.__packages)
+
 
     def hidden(self):
         return self.__packages == 0 and not self.__error
@@ -39,8 +44,9 @@ class Module(core.module.Module):
             "checkupdates", ignore_errors=True, return_exitcode=True
         )
 
+        self.__connection_err = code == 1
         if code == 0:
-            self.__packages = len(result.split("\n"))
+            self.__packages = len(result.strip().split("\n"))
         elif code == 2:
             self.__packages = 0
         else:
@@ -48,9 +54,14 @@ class Module(core.module.Module):
             logging.error("checkupdates exited with {}: {}".format(code, result))
 
     def state(self, widget):
-        if self.__error:
+        if self.__connection_err:
+            return None
+        elif self.__error:
             return "warning"
-        return self.threshold_state(self.__packages, 1, 100)
-
+        warn = 1
+        not_connected = True
+        if not_connected:
+            warn = 100
+        return self.threshold_state(self.__packages, warn, 100)
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
