@@ -1,4 +1,4 @@
-"""Displays bluetooth status. Left mouse click launches manager app,
+"""Displays bluetooth status. Left mouse click launches manager app `blueman-manager`,
 right click toggles bluetooth. Needs dbus-send to toggle bluetooth state and
 python-dbus to count the number of connections
 
@@ -69,7 +69,7 @@ class Module(core.module.Module):
         )
 
         logging.debug("bt: toggling bluetooth")
-        core.util.execute(cmd)
+        util.cli.execute(cmd, ignore_errors=True)
 
     def state(self, widget):
         """Get current state."""

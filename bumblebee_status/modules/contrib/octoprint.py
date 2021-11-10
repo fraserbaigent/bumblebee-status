@@ -1,8 +1,11 @@
 # pylint: disable=C0111,R0903
 
-"""Displays the Octorpint status and the printer's bed/tools temperature in the status bar.
+"""Displays the Octorrint status and the printer's bed/tools temperature in the status bar.
 
    Left click opens a popup which shows the bed & tools temperatures and additionally a livestream of the webcam (if enabled).
+
+Prerequisites:
+    * tk python library (usually python-tk or python3-tk, depending on your distribution)
 
 Parameters:
     * octoprint.address     : Octoprint address (e.q: http://192.168.1.3)
@@ -82,8 +85,15 @@ class Module(core.module.Module):
         core.input.register(self, button=core.input.LEFT_MOUSE, cmd=self.__show_popup)
 
     def octoprint_status(self, widget):
-        if self.__octoprint_state == "Offline" or self.__octoprint_state == "Unknown":
-            return self.__octoprint_state
+        if (
+            self.__octoprint_state.startswith("Offline")
+            or self.__octoprint_state == "Unknown"
+        ):
+            return (
+                (self.__octoprint_state[:25] + "...")
+                if len(self.__octoprint_state) > 25
+                else self.__octoprint_state
+            )
         return (
             self.__octoprint_state
             + " | B: "

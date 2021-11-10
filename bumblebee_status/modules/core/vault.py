@@ -4,11 +4,15 @@
 
 Many thanks to [@bbernhard](https://github.com/bbernhard) for the idea!
 
+Requires the following executable:
+    * pass (aka password-store)
+
 Parameters:
     * vault.duration: Duration until password is cleared from clipboard (defaults to 30)
     * vault.location: Location of the password store (defaults to ~/.password-store)
     * vault.offx: x-axis offset of popup menu (defaults to 0)
     * vault.offy: y-axis offset of popup menu (defaults to 0)
+    * vault.text: Text to display on the widget (defaults to <click-for-password>)
 
 Many thanks to `bbernhard <https://github.com/bbernhard>`_ for the idea!
 """

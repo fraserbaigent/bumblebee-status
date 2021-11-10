@@ -5,6 +5,8 @@ Displays the unread GitHub notifications count for a GitHub user using the follo
 
     * https://developer.github.com/v3/activity/notifications/#notification-reasons
 
+Uses `xdg-open` or `x-www-browser` to open web-pages.
+
 Requires the following library:
     * requests
 
@@ -81,7 +83,6 @@ class Module(core.module.Module):
                 self.__label += "/".join(counts)
 
         except Exception as err:
-            print(err)
             self.__label = "n/a"
 
     def __getUnreadNotificationsCountByReason(self, notifications, reason):

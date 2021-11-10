@@ -5,8 +5,12 @@
 Requires the following python module:
     * netifaces
 
+Requires the following executable:
+    * iw
+    * (until and including 2.0.5: iwgetid)
+
 Parameters:
-    * nic.exclude: Comma-separated list of interface prefixes to exclude (defaults to 'lo,virbr,docker,vboxnet,veth,br')
+    * nic.exclude: Comma-separated list of interface prefixes (supporting regular expressions) to exclude (defaults to 'lo,virbr,docker,vboxnet,veth,br,.*:avahi')
     * nic.include: Comma-separated list of interfaces to include
     * nic.states: Comma-separated list of states to show (prefix with '^' to invert - i.e. ^down -> show all devices that are not in state down)
     * nic.format: Format string (defaults to '{intf} {state} {ip} {ssid}')
@@ -28,13 +32,10 @@ class Module(core.module.Module):
     def __init__(self, config, theme):
         widgets = []
         super().__init__(config, theme, widgets)
-        self._exclude = tuple(
-            filter(
-                len,
-                self.parameter("exclude", "lo,virbr,docker,vboxnet,veth,br").split(","),
-            )
+        self._exclude = util.format.aslist(
+            self.parameter("exclude", "lo,virbr,docker,vboxnet,veth,br,.*:avahi")
         )
-        self._include = self.parameter("include", "").split(",")
+        self._include = util.format.aslist(self.parameter("include", ""))
 
         self._states = {"include": [], "exclude": []}
         for state in tuple(
@@ -86,11 +87,18 @@ class Module(core.module.Module):
             return []
         return retval
 
+    def _excluded(self, intf):
+        for e in self._exclude:
+            if re.match(e, intf):
+                return True
+        return False
+
     def _update_widgets(self, widgets):
         self.clear_widgets()
-        interfaces = [
-            i for i in netifaces.interfaces() if not i.startswith(self._exclude)
-        ]
+        interfaces = []
+        for i in netifaces.interfaces():
+            if not self._excluded(i):
+                interfaces.append(i)
         interfaces.extend([i for i in netifaces.interfaces() if i in self._include])
 
         for intf in interfaces:
@@ -126,13 +134,15 @@ class Module(core.module.Module):
             widget.set("state", state)
 
     def get_ssid(self, intf):
-        if self._iswlan(intf) and not self._istunnel(intf) and self.iw:
-            ssid = util.cli.execute("{} dev {} link".format(self.iw, intf))
-            found_ssid = re.findall("SSID:\s(.+)", ssid)
-            if len(found_ssid) > 0:
-                return found_ssid[0]
-            else:
-                return ""
+        if not self._iswlan(intf) or self._istunnel(intf) or not self.iw:
+            return ""
+
+        iw_info = util.cli.execute("{} dev {} info".format(self.iw, intf))
+        for line in iw_info.split("\n"):
+            match = re.match(r"^\s+ssid\s(.+)$", line)
+            if match:
+                return match.group(1)
+
         return ""
 
 

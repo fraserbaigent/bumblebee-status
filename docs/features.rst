@@ -1,6 +1,25 @@
 Advanced usage
 ===========================
 
+Intervals
+---------
+
+Some modules define their own update intervals (e.g. most modules that query
+an online service), such as to not cause a storm of "once every second" queries.
+
+For such modules, the "global" interval defined via the ``interval`` parameter effectively defines the
+highest possible "resolution". If you have a global interval of 10s, for example,
+any other module can update at 10s, 20s, 30s, etc., but not every 25s. The status
+bar will internally always align to the next future time slot.
+
+The update interval can also be changed on a per-module basis, like
+this (overriding the default module interval indicated above):
+
+.. code-block:: bash
+
+   $ ./bumblebee-status -m cpu memory -p cpu.interval=5s memory.interval=1m
+
+
 Events
 ------
 
@@ -87,6 +106,19 @@ attention, it will remain hidden. Note that this parameter is specified
 *in addition* to ``-m`` (i.e. to autohide the CPU module, you would use
 ``bumblebee-status -m cpu memory traffic -a cpu``).
 
+Scrolling widget text
+-----------------------
+Some widgets support scrolling for long text (e.g. most music player
+widgets, rss, etc.). Those have some additional settings for customizing
+the scrolling behaviour, in particular:
+
+  - ``scrolling.width``: Desired width of the scrolling panel
+  - ``scrolling.makewide``: If set to true, extends texts shorter than
+    ``scrolling.width`` to that width
+  - ``scrolling.bounce``: If set to true, bounces the text when it reaches
+    the end, otherwise, it behaves like marquee (scroll-through) text
+  - ``scrolling.speed``: Defines the scroll speed, in characters per update
+
 Additional widget theme settings
 --------------------------------
 
@@ -110,6 +142,10 @@ An example:
 Configuration files
 -------------------
 
+Using a configuration file, it is possible to define a list of modules
+that will be loaded if no modules are specified on the CLI, as well as
+defining a default theme to use.
+
 Any parameter that can be specified using ``-p <name>=<value>`` on the
 commandline, can alternatively be specified in one of the following
 configuration files: - ~/.bumblebee-status.conf -
@@ -122,6 +158,11 @@ Configuration files have the following format:
 
 ::
 
+   [core]
+   modules = <comma-separated list of modules to load>
+   autohide = <comma-separated list of modules to hide, unless in warning/error state>
+   theme = <theme to use by default>
+
    [module-parameters]
    <key> = <value>
 
@@ -131,3 +172,5 @@ For example:
 
    [module-parameters]
    github.token=abcdefabcdef12345
+
+

@@ -1,10 +1,7 @@
 # -*- coding: UTF-8 -*-
 # pylint: disable=C0111,R0903
 
-"""Display a stock quote from worldtradingdata.com
-
-Requires the following python packages:
-    * requests
+"""Display a stock quote from finance.yahoo.com
 
 Parameters:
     * stock.symbols : Comma-separated list of symbols to fetch
@@ -56,7 +53,11 @@ class Module(core.module.Module):
                 self.__symbols
                 + "&fields=regularMarketPrice,currency,regularMarketChange"
             )
-            return urllib.request.urlopen(url).read().strip()
+            try:
+                return urllib.request.urlopen(url).read().strip()
+            except urllib.request.URLError:
+                logging.error("unable to open stock exchange url")
+                return None
         else:
             logging.error("unable to retrieve stock exchange rate")
             return None

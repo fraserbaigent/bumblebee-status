@@ -5,8 +5,6 @@ some media control bindings.
 Left click toggles pause, scroll up skips the current song, scroll
 down returns to the previous song.
 
-Requires the following library:
-    * subprocess
 Parameters:
     * deadbeef.format:    Format string (defaults to '{artist} - {title}')
       Available values are: {artist}, {title}, {album}, {length},
@@ -114,7 +112,7 @@ class Module(core.module.Module):
             self._song = ""
             return
         ## perform the actual query -- these can be much more sophisticated
-        data = util.cli.execute(self.now_playing_tf + self._tf_format)
+        data = util.cli.execute(self.now_playing_tf + '"'+self._tf_format+'"')
         self._song = data
 
     def update_standard(self, widgets):

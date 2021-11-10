@@ -2,6 +2,11 @@
 
 """Displays system load.
 
+By default, opens `gnome-system-monitor` on left mouse click.
+
+Requirements:
+    * gnome-system-monitor for default mouse click action
+
 Parameters:
     * load.warning : Warning threshold for the one-minute load average (defaults to 70% of the number of CPUs)
     * load.critical: Critical threshold for the one-minute load average (defaults to 80% of the number of CPUs)
@@ -22,6 +27,7 @@ class Module(core.module.Module):
             self._cpus = multiprocessing.cpu_count()
         except NotImplementedError as e:
             self._cpus = 1
+
         core.input.register(
             self, button=core.input.LEFT_MOUSE, cmd="gnome-system-monitor"
         )

@@ -35,6 +35,10 @@
     "empty": { "prefix": "\uf0e0" },
     "items": { "prefix": "\uf0e0" }
   },
+  "portage_status": {
+    "idle": { "prefix": "" },
+    "active": { "prefix": "" }
+  },
   "todo": {
     "empty": { "prefix": "" },
     "items": { "prefix": "" },
@@ -253,6 +257,14 @@
     "muted": { "prefix": "" },
     "unmuted": { "prefix": "" }
   },
+  "dunstctl": {
+    "muted": { "prefix": "" },
+    "unmuted": { "prefix": "" },
+    "unknown": { "prefix": "" }
+  },
+  "rofication": {
+    "prefix":  ""
+  },
   "twmn": {
     "muted": { "prefix": "" },
     "unmuted": { "prefix": "" }
@@ -289,5 +301,8 @@
   "speedtest": {
     "running": { "prefix": ["\uf251", "\uf252", "\uf253"] },
 	"not-running": { "prefix": "\uf144" }
+  },
+  "thunderbird": {
+    "prefix": ""
   }
 }
