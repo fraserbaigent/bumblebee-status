@@ -8,6 +8,7 @@
 [![Code Climate](https://codeclimate.com/github/tobi-wan-kenobi/bumblebee-status/badges/gpa.svg)](https://codeclimate.com/github/tobi-wan-kenobi/bumblebee-status)
 [![Test Coverage](https://codeclimate.com/github/tobi-wan-kenobi/bumblebee-status/badges/coverage.svg)](https://codeclimate.com/github/tobi-wan-kenobi/bumblebee-status/coverage)
 [![Issue Count](https://codeclimate.com/github/tobi-wan-kenobi/bumblebee-status/badges/issue_count.svg)](https://codeclimate.com/github/tobi-wan-kenobi/bumblebee-status)
+[![CodeQL](https://github.com/tobi-wan-kenobi/bumblebee-status/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/tobi-wan-kenobi/bumblebee-status/actions/workflows/codeql-analysis.yml)
 ![License](https://img.shields.io/github/license/tobi-wan-kenobi/bumblebee-status)
 
 **Many, many thanks to all contributors! I am still amazed by and deeply grateful for how many PRs this project gets.**
@@ -76,6 +77,8 @@ pip install --user bumblebee-status
 ```
 
 There is also a SlackBuild available here: [slackbuilds:bumblebee-status](http://slackbuilds.org/repository/14.2/desktop/bumblebee-status/) - many thanks to [@Tonus1](https://github.com/Tonus1)!
+
+An ebuild, for Gentoo Linux, is available on [gallifrey overlay](https://github.com/fedeliallalinea/gallifrey/tree/master/x11-misc/bumblebee-status). Instructions for adding the overlay can be found [here](https://github.com/fedeliallalinea/gallifrey/blob/master/README.md).
 
 # Dependencies
 [Available modules](https://bumblebee-status.readthedocs.io/en/main/modules.html) lists the dependencies (Python modules and external executables)

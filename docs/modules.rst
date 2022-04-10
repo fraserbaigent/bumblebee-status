@@ -401,6 +401,20 @@ Requires the following executable:
 
 contributed by `lucassouto <https://github.com/lucassouto>`_ - many thanks!
 
+.. image:: ../screenshots/arch-update.png
+
+aur-update
+~~~~~~~~~~~
+
+Check updates for AUR.
+
+Requires the following executable:
+    * yay (https://github.com/Jguer/yay)
+
+contributed by `ishaanbhimwal <https://github.com/ishaanbhimwal>`_ - many thanks!
+
+.. image:: ../screenshots/aur-update.png
+
 battery
 ~~~~~~~
 
@@ -724,6 +738,21 @@ contributed by `cristianmiranda <https://github.com/cristianmiranda>`_ - many th
 contributed by `joachimmathes <https://github.com/joachimmathes>`_ - many thanks!
 
 .. image:: ../screenshots/dunstctl.png
+
+emerge_status
+~~~~~~~~~~~~~
+
+Display information about the currently running emerge process.
+
+Requires the following executable:
+    * emerge
+
+Parameters:
+    * emerge_status.format: Format string (defaults to '{current}/{total} {action} {category}/{pkg}')
+
+This code is based on `emerge_status module from p3status <https://github.com/ultrabug/py3status/blob/master/py3status/modules/emerge_status.py>`_ original created by `AnwariasEu <https://github.com/AnwariasEu>`_.
+
+.. image:: ../screenshots/emerge_status.png
 
 getcrypto
 ~~~~~~~~~

@@ -10,6 +10,7 @@ import core.module
 import core.widget
 import core.decorators
 import requests
+import core.input
 
 class Module(core.module.Module):
     @core.decorators.every(minutes=60)
@@ -99,5 +100,8 @@ class Module(core.module.Module):
         except Exception as e:
             return { "ERROR": { 'game' : "Connection Error",
                                 "viewers": ""} }
+
+    def update_text(self, event):
+        self.__text = core.input.button_name(event["button"])
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
