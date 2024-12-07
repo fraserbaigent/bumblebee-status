@@ -62,7 +62,7 @@ class Module(core.module.Module):
         self.__scroll_interval = 1
 
         self.__scroll_step = 10
-        self.__width = 40
+        self.__width = 50
         self.__scroller = None
         self.populate_map_from_json()
         self.update_phrase()
@@ -84,9 +84,12 @@ class Module(core.module.Module):
         return self.__scroller.scrolled_text
 
     def populate_map_from_json(self):
-        with open(self.__json_file, "r") as infile:
-            self.__phrase_list = json.load(infile)["phrases"]
-
+        try:
+            with open(self.__json_file, "r") as infile:
+                self.__phrase_list = json.load(infile)["phrases"]
+        except:
+            self.__phrase_list[0]['author'] = f'Failed to load phrases from {self.__json_file}'
+        
     def update_phrase(self):
         phrase = None
         val = None
